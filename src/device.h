@@ -92,7 +92,6 @@ struct lytDeviceProto
   void (*dd_emit_escape) (const char *esc);
   void (*dd_embed_img) (const char *path, lytImageType type);
   void (*dd_embed_file) (const char *path);
-  void (*dd_get_caps) (void);
 };
 
 struct lytDeviceCaps
