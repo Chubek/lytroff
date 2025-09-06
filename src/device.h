@@ -54,6 +54,12 @@ struct lytDeviceFont
   lytDeviceFont *next;          // points to the next device font
 };
 
+struct lytDeviceFontList
+{
+  lytDeviceFont *head;
+  lytDeviceFont *tail;
+};
+
 struct lytDeviceProto
 {
   void (*dd_init_device) (void);
@@ -137,7 +143,7 @@ struct lytDeviceCaps
 struct lytDeviceDriver
 {
   lytDeviceDesc desc;
-  lytDeviceFont fonts;
+  lytDeviceFontList fonts;
   lytDeviceProto proto;
   lytDeviceCaps caps;
 };
