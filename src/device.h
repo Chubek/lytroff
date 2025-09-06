@@ -8,11 +8,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "color.h"
+#include "embed.h"
 #include "externprog.h"
 #include "font.h"
+#include "glyph.h"
 #include "ligature.h"
 #include "paper.h"
 #include "tyydecl.h"
+#include "word.h"
 
 struct lytDeviceDesc
 {
@@ -56,16 +60,16 @@ struct lytDeviceProto
   void (*dd_pause) (void);
   void (*dd_stop) (void);
   void (*dd_gen_trailer_info) (void);
-  void (*dd_begin_page) (size_t pagenum);
-  void (*dd_end_of_line) (size_t wsbefore, size_t wsafter);
+  void (*dd_begin_page) (size_t page_num);
+  void (*dd_end_of_line) (size_t ws_before, size_t ws_after);
   void (*dd_set_font) (int id, double size, lytFontStyle style);
-  void (*dd_set_line_thickness) (size_t thk);
+  void (*dd_set_line_thickness) (size_t thickness);
   void (*dd_set_bgcolor) (lytColorScheme schm, const lytColor *color);
   void (*dd_set_fgcolor) (lytColorScheme schm, const lytColor *color);
   void (*dd_set_strokecolor) (lytColorScheme schm, const lytcolor *color);
   void (*dd_set_fillcolor) (lytColorScheme schm, const lytColor *color);
   void (*dd_draw_char) (const lytGlyph *glyph);
-  void (*dd_print_namedchar) (const char *nm);
+  void (*dd_print_namedchar) (const char *name);
   void (*dd_print_idxchar) (size_t idx);
   void (*dd_print_word) (lytWord *word);
   void (*dd_print_kernword) (lytWord *word, size_t kern);
@@ -127,7 +131,7 @@ struct lytDeviceCaps
   bool can_url_links;
 
   double min_linewidth;
-  double max_lineheight;
+  double max_linewidth;
   double min_fontsize;
   double max_fontsize;
 };
