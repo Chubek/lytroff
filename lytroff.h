@@ -22,9 +22,7 @@ struct lytDeviceProto
   void (*dd_gen_trailer_info) (void);
   void (*dd_begin_page) (size_t pagenum);
   void (*dd_end_of_line) (size_t wsbefore, size_t wsafter);
-  void (*dd_set_font) (int fontid, double size);
-  void (*dd_set_fontsize) (int size);
-  void (*dd_set_fontstyle) (lytFontStyle fs);
+  void (*dd_set_font) (int id, double size, lytFontStyle style);
   void (*dd_set_line_thickness) (size_t thk);
   void (*dd_set_bgcolor) (lytColorScheme schm, const lytColor *color);
   void (*dd_set_fgcolor) (lytColorScheme schm, const lytColor *color);
@@ -39,19 +37,61 @@ struct lytDeviceProto
   void (*dd_goto_vertpos) (size_t pos, bool abs);
   void (*dd_move_and_print) (size_t motion, lytGlyph *glyph);
   void (*dd_draw_line) (double w, double h);
-  void (*dd_draw_circle) (double d);
-  void (*dd_draw_solid_circle) (double d);
+  void (*dd_draw_circle) (double d, bool solid);
+  void (*dd_draw_ellipse) (double dh1, double dv2, bool solid);
+  void (*dd_draw_rule) (double w, double h, bool solid);
+  void (*dd_draw_poly) (bool solid, size_t npairs, ...);
   void (*dd_draw_arc) (double dh1, double dv1, double dh2, double dv2);
-  void (*dd_draw_ellipse) (double dh1, double dv2);
   void (*dd_draw_spline) (size_t npairs, ...);
-  void (*dd_draw_poly) (size_t npairs, ...);
-  void (*dd_draw_solid_poly) (size_t npairs, ...);
   void (*dd_set_glyph_height) (size_t h);
   void (*dd_set_glyph_slant) (size_t s);
   void (*dd_set_glyph_underlined) (void);
   void (*dd_set_res) (size_t n, size_t h, size_t v);
   void (*dd_set_output_driver) (const char *nm);
   void (*dd_emit_escape) (const char *esc);
+  void (*dd_embed_img) (const char *path, lytImageType type);
+  void (*dd_embed_file) (const char *path);
+};
+
+struct lytDeviceCaps
+{
+  bool can_unicode;
+  bool can_composite_glyphs;
+  bool can_variable_sizes;
+  bool can_slant;
+  bool can_height_adjust;
+
+  bool can_abs_pos;
+  bool can_rel_pos;
+
+  bool can_rules;
+  bool can_lines;
+  bool can_circles;
+  bool can_solid_circles;
+  bool can_ellipses;
+  bool can_solid_ellipses;
+  bool can_polygons;
+  bool can_solid_polygons;
+  bool can_arcs;
+  bool can_splines;
+
+  bool can_color;
+  bool can_fill;
+  bool can_pattern;
+  bool can_alpha;
+
+  bool can_embed_file;
+  bool can_embed_image;
+
+  bool can_specials;
+  bool can_exec_escapes;
+  bool can_page_size;
+  bool can_url_links;
+
+  bool min_linewidth;
+  bool max_lineheight;
+  bool min_fontsize;
+  bool max_fontsize;
 };
 
 #endif
