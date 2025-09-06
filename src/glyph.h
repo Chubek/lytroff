@@ -30,11 +30,14 @@ struct lytGlyph
 
   double pos_x;
   double pos_y;
-
+  double advance_x;
+  double advance_y;
+  
   bool underline;
   bool overstrike;
   bool faux_bold;
   bool visible;
+  bool broken;
 
   lytFont *parent_font;
   lytGlyph *next;
