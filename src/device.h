@@ -8,15 +8,51 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "externprog.h"
+#include "font.h"
+#include "ligature.h"
+#include "paper.h"
 #include "tyydecl.h"
+
+struct lytDeviceDesc
+{
+  lytFontFamily dfl_fontfamily;
+  lytFontVector
+      *mounted_founts; // array of fonts, each contain `style`, `sizes`
+  lytExternProg *img_generator;
+  lytExternProg *preprocs;  // linked list of extern progs
+  lytExternProg *postprocs; // linked list of extern progs
+  lytExternProg *printer;   // linked list of extern progs
+  lytPaperSize *paper_size;
+
+  bool pass_filenames;
+  bool tcmd;
+  bool unicode;
+  bool unscaled_charwidths;
+  bool use_charnm_in_special;
+
+  size_t uniwidth;
+  size_t resolution;
+  size_t paper_length;
+  size_t paper_width;
+  size_t horiz_quantum;
+  size_t vert_quantum;
+  size_t size_scale;
+};
+
+struct lytDeviceFont
+{
+  const char *name;
+  size_t space_width;
+  size_t slant;
+  bool specials;
+  lytLigatureVector *ligatures; // array of ligatures
+  lytDeviceFont *next;          // points to the next device font
+};
 
 struct lytDeviceProto
 {
-  const char *descpath;
-  const char *fontpath;
-  const char *devname;
-
-  void (*dd_init_device) (const lytDeviceSpecs *desc);
+  void (*dd_init_device) (void);
   void (*dd_pause) (void);
   void (*dd_stop) (void);
   void (*dd_gen_trailer_info) (void);
@@ -48,11 +84,11 @@ struct lytDeviceProto
   void (*dd_set_glyph_underlined) (void);
   void (*dd_set_res) (size_t n, size_t h, size_t v);
   void (*dd_set_output_driver) (const char *nm);
-  void (*dd_emit_specials)(const char *spec);
+  void (*dd_emit_specials) (const char *spec);
   void (*dd_emit_escape) (const char *esc);
   void (*dd_embed_img) (const char *path, lytImageType type);
   void (*dd_embed_file) (const char *path);
-  void (*dd_get_caps)(void);
+  void (*dd_get_caps) (void);
 };
 
 struct lytDeviceCaps
@@ -98,6 +134,8 @@ struct lytDeviceCaps
 
 struct lytDeviceDriver
 {
+  lytDeviceDesc desc;
+  lytDeviceFont fonts;
   lytDeviceProto proto;
   lytDeviceCaps caps;
 };
