@@ -87,7 +87,6 @@ struct lytDeviceProto
   void (*dd_set_glyph_slant) (size_t s);
   void (*dd_set_glyph_underlined) (void);
   void (*dd_set_res) (size_t n, size_t h, size_t v);
-  void (*dd_set_output_driver) (const char *nm);
   void (*dd_emit_specials) (const char *spec);
   void (*dd_emit_escape) (const char *esc);
   void (*dd_embed_img) (const char *path, lytImageType type);
