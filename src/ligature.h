@@ -16,9 +16,11 @@
 #define LYT_LIGF_MANDATORY (1U << 4)
 #define LYT_LIGF_SYNTHETIC (1U << 5)
 
+#define MAX_LIGATURE_SEQUENCE
+
 struct lytLigature
 {
-  char sequence[8];
+  char sequence[MAX_LIGATURE_SEQUENCE + 1];
   char32_t codepoint;
 
   const char *glyph_name;
