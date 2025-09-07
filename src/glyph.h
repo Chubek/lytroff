@@ -42,6 +42,12 @@ struct lytGlyph
   lytGlyph *next;
 };
 
+struct lytGlyphList
+{
+   lytGlyph *head;
+   lytGlyph *tail;
+};
+
 struct lytGlyphVector
 {
   lytGlyph *data;
