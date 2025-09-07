@@ -40,4 +40,11 @@ struct lytLigatureList
   lytLigature *tail;
 };
 
+struct lytLigatureVector
+{
+  lytLigature **data;
+  size_t capacity;
+  size_t count;
+};
+
 #endif
