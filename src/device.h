@@ -50,7 +50,7 @@ struct lytDeviceFont
   size_t space_width;
   size_t slant;
   bool specials;
-  lytLigatureVector *ligatures; // array of ligatures
+  lytLigatureList *ligatures; // linked list of ligatures
   lytDeviceFont *next;          // points to the next device font
 };
 
