@@ -12,13 +12,12 @@
 
 struct lytDeviceDesc
 {
-  lytFontFamily dfl_fontfamily;
-  lytFontVector
-      *mounted_founts; // array of fonts, each contain `style`, `sizes`
-  lytExternProg *img_generator;
-  lytExternProg *preprocs;  // linked list of extern progs
-  lytExternProg *postprocs; // linked list of extern progs
-  lytExternProg *printer;   // linked list of extern progs
+  lytFontFamily default_font_family;
+  lytFontVector *mounted_founts;
+  lytExtProgList *img_generator;
+  lytExtProgList *preprocessors;
+  lytExtProgList *postprocssors;
+  lytExtProgList *printer;
   lytPaperSize *paper_size;
 
   bool pass_filenames;
@@ -42,8 +41,8 @@ struct lytDeviceFont
   size_t space_width;
   size_t slant;
   bool specials;
-  lytLigatureList *ligatures; // linked list of ligatures
-  lytDeviceFont *next;          // points to the next device font
+  lytLigatureList *ligatures;
+  lytDeviceFont *next;
 };
 
 struct lytDeviceFontList
@@ -64,15 +63,15 @@ struct lytDeviceProto
   void (*dd_set_line_thickness) (size_t thickness);
   void (*dd_set_bgcolor) (lytColorScheme schm, const lytColor *color);
   void (*dd_set_fgcolor) (lytColorScheme schm, const lytColor *color);
-  void (*dd_set_strokecolor) (lytColorScheme schm, const lytcolor *color);
-  void (*dd_set_fillcolor) (lytColorScheme schm, const lytColor *color);
+  void (*dd_set_stroke_color) (lytColorScheme schm, const lytcolor *color);
+  void (*dd_set_fill_color) (lytColorScheme schm, const lytColor *color);
   void (*dd_draw_char) (const lytGlyph *glyph);
-  void (*dd_print_namedchar) (const char *name);
-  void (*dd_print_idxchar) (size_t idx);
+  void (*dd_print_named_char) (const char *name);
+  void (*dd_print_indexed_char) (size_t idx);
   void (*dd_print_word) (lytWord *word);
-  void (*dd_print_kernword) (lytWord *word, size_t kern);
-  void (*dd_goto_horizpos) (size_t pos, bool abs);
-  void (*dd_goto_vertpos) (size_t pos, bool abs);
+  void (*dd_print_kern_word) (lytWord *word, size_t kern);
+  void (*dd_goto_horiz_pos) (size_t pos, bool abs);
+  void (*dd_goto_vert_pos) (size_t pos, bool abs);
   void (*dd_move_and_print) (size_t motion, lytGlyph *glyph);
   void (*dd_draw_line) (double w, double h);
   void (*dd_draw_circle) (double d, bool solid);
