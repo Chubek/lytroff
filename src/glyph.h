@@ -8,7 +8,6 @@
 #include <string.h>
 #include <uchar.h>
 
-#include "font.h"
 #include "tyydecl.h"
 
 struct lytGlyph

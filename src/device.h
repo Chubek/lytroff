@@ -8,15 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "color.h"
-#include "embed.h"
-#include "externprog.h"
-#include "font.h"
-#include "glyph.h"
-#include "ligature.h"
-#include "paper.h"
 #include "tyydecl.h"
-#include "word.h"
 
 struct lytDeviceDesc
 {

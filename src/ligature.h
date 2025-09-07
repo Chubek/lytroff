@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "font.h"
 #include "tyydecl.h"
 
 #define LYT_LIGF_DISCRETIONARY (1U << 0)
