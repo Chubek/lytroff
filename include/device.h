@@ -51,6 +51,36 @@ struct lytDeviceFontList
   lytDeviceFont *tail;
 };
 
+struct lytCommandConfig
+{
+  uint16_t opcode_id;
+  uint8_t domain;
+  uint16_t mode_mask;
+  uint16_t attrib_flags;
+  uint8_t impl_class;
+  uint64_t hash_key;
+};
+
+struct lytDeviceCommandMap
+{
+  struct lytDeviceCommandMapEntry
+  {
+    lytCommandConfig key;
+    lytDeviceCommand cmd;
+    lytDeviceCommandMapEntry *next;
+  } *entries;
+  size_t entries_count;
+  size_t entries_capacity;
+};
+
+struct lytDeviceCommand
+{
+  const lytCommandConfig *config;
+  int (*execute) (lytDeviceDriver *drv, const void *args);
+  const void *args;
+  size_t arg_size;
+};
+
 struct lytDeviceProto
 {
   void (*dd_init_device) (void);
@@ -137,6 +167,7 @@ struct lytDeviceDriver
   lytDeviceFontList fonts;
   lytDeviceProto proto;
   lytDeviceCaps caps;
+  lytDeviceCommandMap cmdmap;
 };
 
 #endif
